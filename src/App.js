@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [checkboxes, setCheckboxes] = useState([
+  const [selectedAnimals, setSelectedAnimals] = useState([
     { id: 1, label: 'Dogs', checked: false },
     { id: 2, label: 'Cats', checked: false },
     { id: 3, label: 'Cows', checked: false },
@@ -10,39 +10,34 @@ function App() {
   ]);
 
   const handleCheckboxChange = (id) => {
-    setCheckboxes(
-      checkboxes.map((checkbox) =>
-        checkbox.id === id
-          ? { ...checkbox, checked: !checkbox.checked }
-          : checkbox
+    setSelectedAnimals(
+      selectedAnimals.map((item) =>
+        item.id === id ? { ...item, checked: !item.checked } : item
       )
     );
   };
 
   const handleSelectAll = () => {
-    setCheckboxes(
-      checkboxes.map((checkbox) => ({ ...checkbox, checked: true }))
+    setSelectedAnimals(
+      selectedAnimals.map((item) => ({ ...item, checked: true }))
     );
   };
 
   return (
     <div>
       <ul>
-        {checkboxes.map((checkbox, index) => (
-          <li key={checkbox.id}>
+        {selectedAnimals.map((item, index) => (
+          <li key={item.id}>
             <input
-              data-testid={`checkbox-${index + 1}`}
               type="checkbox"
-              checked={checkbox.checked}
-              onChange={() => handleCheckboxChange(checkbox.id)}
+              checked={item.checked}
+              onChange={() => handleCheckboxChange(item.id)}
             />
-            {checkbox.label}
+            {item.label}
           </li>
         ))}
       </ul>
-      <button data-testid="button" onClick={handleSelectAll}>
-        Select All
-      </button>
+      <button onClick={handleSelectAll}>Select All</button>
     </div>
   );
 }
